@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+
+        h1 {
+            color: #343a40;
+        }
+
+        #taskForm {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #495057;
+        }
+
+        input, button {
+            padding: 10px;
+            margin-bottom: 15px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #taskList {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background-color: #bd2130;
+        }
+    </style>
+</head>
+<body>
+    <h1>Task Manager</h1>
+
+    <div id="taskForm">
+        <label for="task">Task:</label>
+        <input type="text" id="task" name="task" required>
+
+        <label for="dueDate">Due Date:</label>
+        <input type="date" id="dueDate" name="dueDate" required>
+
+        <button type="button" onclick="addTask()">Add Task</button>
+    </div>
+
+    <ul id="taskList"></ul>
+
+    <script>
+        function addTask() {
+            const taskInput = document.getElementById('task');
+            const dueDateInput = document.getElementById('dueDate');
+            const taskList = document.getElementById('taskList');
+
+            if (taskInput.value.trim() === '' || dueDateInput.value === '') {
+                alert('Please enter both task and due date!');
+                return;
+            }
+
+            const taskItem = document.createElement('li');
+            taskItem.innerHTML = `
+                <span>${taskInput.value}</span>
+                <span>${dueDateInput.value}</span>
+                <div class="task-actions">
+                    <button class="delete-btn" onclick="deleteTask(this)">Delete</button>
+                </div>
+            `;
+
+            taskList.appendChild(taskItem);
+
+            taskInput.value = ''; // Clear the task input field
+            dueDateInput.value = ''; // Clear the due date input field
+        }
+
+        function deleteTask(button) {
+            const taskItem = button.parentElement.parentElement;
+            taskItem.remove();
+        }
+    </script>
+</body>
+</html>
